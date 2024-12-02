@@ -4,8 +4,11 @@ FROM php:8.3-cli
 # Set the working directory
 WORKDIR /app
 
-# Install necessary PHP extensions (pdo, pdo_mysql, etc.)
-RUN docker-php-ext-install pdo pdo_mysql
+# Install necessary PHP extensions and dependencies
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_mysql
 
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
